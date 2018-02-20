@@ -4,48 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-## fig 4a
-#v1=np.genfromtxt('f4v1.csv',delimiter=',')
-#v2=np.genfromtxt('f4v2.csv',delimiter=',')
-#v3=np.genfromtxt('f4v3.csv',delimiter=',')
-#t=np.genfromtxt('time.csv',delimiter=',')
-
-#fig=plt.figure()
-
-
-#ax1=fig.add_subplot(3,1,1)
-#plt.plot(t,v1,'k')
-#plt.xlim(0,6)
-##plt.ylabel('V')
-#ax1.text(5,30,'1.8 $^o$C')
-
-#ax2=fig.add_subplot(3,1,2)
-#plt.plot(t,v2,'k')
-#plt.xlim(0,6)
-##plt.ylabel('V')
-#ax2.text(5,20,'10.2 $^o$C')
-
-#ax3=fig.add_subplot(3,1,3)
-#plt.plot(t,v3,'k')
-#plt.xlim(0,6)
-##plt.ylabel('V')
-#plt.xlabel('Time (ms)')
-#ax3.text(5,20,'20.0 $^o$C')
-
-#plt.setp(ax1.get_xticklabels(), visible=False)
-#plt.setp(ax2.get_xticklabels(), visible=False)
-#plt.setp(ax1.get_yticklabels(), visible=False)
-#plt.setp(ax2.get_yticklabels(), visible=False)
-#plt.setp(ax3.get_yticklabels(), visible=False)
-
-
-
-##plt.savefig('fig4a.jpeg',format='jpeg',dpi=600,bbox_inches='tight')
-#plt.show()
-
-
-#raw_input('go')
-## fig 4b
 
 T=[0,5,7.5,10,12.5,15,17.5,20,25]
 #ror=[169,227,283,330,404,466,508,554,700]
@@ -104,6 +62,4 @@ plt.xlabel(r'Temperature ($^o$C)', fontsize=18)
 plt.ylabel('Normalized Conduction Velocity ($m^{0.5}$/s)',fontsize=18)
 plt.xlim(-4,30)
 plt.ylim(250, 2000)
-
-plt.savefig('fig4d.jpeg',format='jpeg',dpi=600)
 plt.show()
