@@ -1,0 +1,9 @@
+Temp,ror_may,rof_may,ror_mhh,rof_mhh,ror_hh,rof_hh,rof_error_lower,rof_error_upper,ror_error_lower,ror_error_upper
+5,270,,,,,,,,,
+7.5,330,,,,,,,,,
+10,397,,,,,,,,,
+15.5,460,,,,,,,,,
+15,520,,,,,,,,,
+17.5,600,,,,,,,,,
+20,668,,,,,,,,,
+25,757,,,,,,,,,
