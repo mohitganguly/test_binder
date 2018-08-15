@@ -54,8 +54,9 @@ RUN python setup.py install
 
 
 ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
-RUN nrnivmodl
+
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
 USER main
+RUN nrnivmodl
