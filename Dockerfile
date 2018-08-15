@@ -1,45 +1,59 @@
-# # A Docker image for running neuronal network simulations # FROM neuralensemble/base:py2 MAINTAINER andrew.davison@unic.cnrs-gif.fr ENV NEST_VER=2.2.2 NRN_VER=7.4 ENV NEST=nest-$NEST_VER NRN=nrn-$NRN_VER WORKDIR /home/docker/packages
-RUN wget https://github.com/nest/nest-simulator/releases/download/v$NEST_VER/$NEST.tar.gz
-RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v$NRN_VER/$NRN.tar.gz
-RUN tar xzf $NEST.tar.gz; tar xzf $NRN.tar.gz; rm $NEST.tar.gz $NRN.tar.gz
-RUN mkdir $VENV/build
-WORKDIR $VENV/build
-RUN mkdir $NEST; \
-    cd $NEST; \
-    PYTHON=$VENV/bin/python $HOME/packages/$NEST/configure --with-mpi --prefix=$VENV --with-python=$VENV/bin/python --with-pynest-prefix=$VENV; \
-    make; make install
-RUN mkdir $NRN; \
-    cd $NRN; \
-    $HOME/packages/$NRN/configure --with-paranrn --with-nrnpython=$VENV/bin/python --disable-rx3d --without-iv --prefix=$VENV; \
-    make; make install; \
-    cd src/nrnpython; $VENV/bin/python setup.py install; \
-    cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
-ENV PATH=$VENV/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin RUN $VENV/bin/pip install brian nrnutils PyNN==0.7.5
-WORKDIR /home/docker/
+#
+# NEURON Dockerfile
+#
+
+# Pull base image.
+FROM andrewosh/binder-base
+
+MAINTAINER Alex Williams <alex.h.willia@gmail.com>
+
+USER root
+
+RUN \
+  apt-get update && \
+  apt-get install -y libncurses-dev
+
+# Make ~/neuron directory to hold stuff.
+WORKDIR neuron
+
+# Fetch NEURON source files, extract them, delete .tar.gz file.
+RUN \
+  wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.4/nrn-7.4.tar.gz && \
+  tar -xzf nrn-7.4.tar.gz && \
+  rm nrn-7.4.tar.gz
+
+# Fetch Interviews.
+# RUN \
+#  wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.4/iv-19.tar.gz  && \  
+#  tar -xzf iv-19.tar.gz && \
+#  rm iv-19.tar.gz
+
+WORKDIR nrn-7.4
+
+# Compile NEURON.
+RUN \
+  ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
+  make && \
+  make install
+
+# Install python interface
 WORKDIR src/nrnpython
 RUN python setup.py install
 
 # Install PyNeuron-Toolbox
-#WORKDIR $HOME
-#RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
-#WORKDIR PyNeuron-Toolbox
-#RUN python setup.py install
+WORKDIR $HOME
+RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
+WORKDIR PyNeuron-Toolbox
+RUN python setup.py install
 
 # Install JSAnimation
-#WORKDIR $HOME
-#RUN git clone https://github.com/jakevdp/JSAnimation.git
-#RUN python JSAnimation/setup.py install
+WORKDIR $HOME
+RUN git clone https://github.com/jakevdp/JSAnimation.git
+RUN python JSAnimation/setup.py install
 
 
 ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
-RUN mkdir -p $VENV; \
-    cd $NRN; mkdir -p $VENV/bin; \
-    $HOME/packages/$NRN/configure --with-paranrn --with-nrnpython=/usr/bin/python2 --disable-rx3d --without-iv --prefix=$VENV; \
-    make; make install; \
-    cd src/nrnpython; /usr/bin/python2 setup.py install; \
-cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
 USER main
-
