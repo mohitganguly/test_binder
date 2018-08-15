@@ -35,6 +35,7 @@ RUN \
   ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
   make && \
   make install
+  
 
 # Install python interface
 WORKDIR src/nrnpython
@@ -53,6 +54,7 @@ RUN python setup.py install
 
 
 ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
+RUN nrnivmodl
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
