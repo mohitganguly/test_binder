@@ -59,4 +59,4 @@ ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
 # Switch back to non-root user privledges
 WORKDIR $HOME
 USER main
-RUN nrnivmodl
+
