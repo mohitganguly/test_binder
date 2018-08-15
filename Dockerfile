@@ -54,7 +54,12 @@ RUN python setup.py install
 
 
 ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
-
+RUN mkdir -p $VENV; \
+    cd $NRN; mkdir -p $VENV/bin; \
+    $HOME/packages/$NRN/configure --with-paranrn --with-nrnpython=/usr/bin/python2 --disable-rx3d --without-iv --prefix=$VENV; \
+    make; make install; \
+    cd src/nrnpython; /usr/bin/python2 setup.py install; \
+cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
