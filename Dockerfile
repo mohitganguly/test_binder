@@ -57,4 +57,4 @@ RUN python setup.py install
 # Switch back to non-root user privledges
 WORKDIR $HOME
 USER main
-RUN nrnivmodl
+RUN nrniv
