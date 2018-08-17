@@ -58,6 +58,6 @@ RUN python setup.py install
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
-ADD nrnivmodl
+ADD hh_pump.mod pwd
 USER main
 
