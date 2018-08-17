@@ -41,6 +41,7 @@ WORKDIR src/nrnpython
 RUN python setup.py install
 
 
+
 # Install PyNeuron-Toolbox
 #WORKDIR $HOME
 #RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
@@ -57,5 +58,6 @@ RUN python setup.py install
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
+RUN nrnivmodl
 USER main
 
