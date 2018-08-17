@@ -35,11 +35,12 @@ RUN \
   ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
   make && \
   make install
+  nrnivmodl
 
 # Install python interface
 WORKDIR src/nrnpython
 RUN python setup.py install
-RUN nrnivmodl
+
 
 # Install PyNeuron-Toolbox
 #WORKDIR $HOME
