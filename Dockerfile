@@ -39,6 +39,7 @@ RUN \
 # Install python interface
 WORKDIR src/nrnpython
 RUN python setup.py install
+RUN nrnivmodl
 
 # Install PyNeuron-Toolbox
 #WORKDIR $HOME
