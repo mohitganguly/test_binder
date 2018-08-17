@@ -58,6 +58,6 @@ RUN python setup.py install
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
-RUN nrnivmodl
+ADD nrnivmodl
 USER main
 
