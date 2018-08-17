@@ -60,4 +60,5 @@ RUN python setup.py install
 WORKDIR $HOME
 ADD hh_pump.mod pwd
 USER main
+RUN nrnivmodl
 
