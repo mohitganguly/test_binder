@@ -58,3 +58,4 @@ RUN python setup.py install
 # Switch back to non-root user privledges
 WORKDIR $HOME
 USER main
+ADD hh_pump.mod 
