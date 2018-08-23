@@ -55,10 +55,10 @@ RUN python setup.py install
 
 
 #ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
-
+ENV PATH "/opt/nrn/x86_64/bin:$PATH"
 # Switch back to non-root user privledges
 WORKDIR $HOME
 ADD hh_pump.mod pwd
 USER main
-#RUN nrnivmodl
+RUN nrnivmodl
 
