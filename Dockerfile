@@ -60,5 +60,5 @@ ENV PATH "/opt/nrn/x86_64/bin:$PATH"
 WORKDIR $HOME
 #ADD hh_pump.mod pwd
 USER main
-#RUN nrnivmodl
+RUN nrnivmodl
 
