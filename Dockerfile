@@ -58,7 +58,7 @@ RUN python setup.py install
 ENV PATH "/opt/nrn/x86_64/bin:$PATH"
 # Switch back to non-root user privledges
 WORKDIR $HOME
-ADD hh_pump.mod pwd
+#ADD hh_pump.mod pwd
 USER main
-RUN nrnivmodl
+#RUN nrnivmodl
 
