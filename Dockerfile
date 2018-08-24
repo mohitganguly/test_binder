@@ -90,4 +90,4 @@ RUN mkdir -p $VENV; \
 
 		
 
-USER root
+USER main
