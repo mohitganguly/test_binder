@@ -36,7 +36,67 @@ RUN \
   make && \
   make install \
   
- RUN mkdir -p $VENV; \
+RUN mkdir $HOME/env; mkdir $HOME/packages
+
+		
+
+ENV VENV=$HOME/env/neurosci
+
+		
+
+		
+
+ENV NRN_VER=7.4
+
+		
+
+ENV NRN=nrn-$NRN_VER
+
+		
+
+ENV PATH=$PATH:$VENV/bin
+
+		
+
+		
+
+WORKDIR $HOME/packages
+
+		
+
+RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v$NRN_VER/$NRN.tar.gz
+
+		
+
+RUN tar xzf $NRN.tar.gz; rm $NRN.tar.gz
+
+		
+
+		
+
+USER root
+
+		
+
+		
+
+RUN apt-get update; apt-get install -y automake libtool build-essential openmpi-bin libopenmpi-dev git vim  \
+
+		
+
+                       wget libncurses5-dev libreadline-dev libgsl0-dev cython3
+
+		
+
+		
+
+USER $NB_USER
+
+		
+
+		
+
+RUN mkdir -p $VENV; \
 
 		
 
@@ -56,25 +116,13 @@ RUN \
 
 		
 
-    cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl 
-  
-# Install python interface
-#WORKDIR src/nrnpython
-#RUN python setup.py install
+    cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
 
-# Install PyNeuron-Toolbox
-#WORKDIR $HOME
-#RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
-#WORKDIR PyNeuron-Toolbox
-#RUN python setup.py install
+		
 
-# Install JSAnimation
-#WORKDIR $HOME
-#RUN git clone https://github.com/jakevdp/JSAnimation.git
-#RUN python JSAnimation/setup.py install
+		
 
-
-#ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
+USER main
 
 
 
