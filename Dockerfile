@@ -35,7 +35,29 @@ RUN \
   ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
   make && \
   make install \
-  cd $VENV/bin/sh; ln -s ../x86_64/bin/sh/nrnivmodl
+  
+ RUN mkdir -p $VENV; \
+
+		
+
+    cd $NRN; mkdir -p $VENV/bin; \
+
+		
+
+    $HOME/packages/$NRN/configure --with-paranrn --with-nrnpython=/usr/bin/python2 --disable-rx3d --without-iv --prefix=$VENV; \
+
+		
+
+    make; make install; \
+
+		
+
+    cd src/nrnpython; /usr/bin/python2 setup.py install; \
+
+		
+
+    cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl 
+  
 # Install python interface
 #WORKDIR src/nrnpython
 #RUN python setup.py install
