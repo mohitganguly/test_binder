@@ -1,93 +1,61 @@
-FROM jupyter/scipy-notebook:bde52ed89463
+#
+# NEURON Dockerfile
+#
 
-		
+# Pull base image.
+FROM andrewosh/binder-base
 
-		
-
-RUN mkdir $HOME/env; mkdir $HOME/packages
-
-		
-
-ENV VENV=$HOME/env/neurosci
-
-		
-
-		
-
-ENV NRN_VER=7.4
-
-		
-
-ENV NRN=nrn-$NRN_VER
-
-		
-
-ENV PATH=$PATH:$VENV/bin
-
-		
-
-		
-
-WORKDIR $HOME/packages
-
-		
-
-RUN wget http://www.neuron.yale.edu/ftp/neuron/versions/v$NRN_VER/$NRN.tar.gz
-
-		
-
-RUN tar xzf $NRN.tar.gz; rm $NRN.tar.gz
-
-		
-
-		
+MAINTAINER Alex Williams <alex.h.willia@gmail.com>
 
 USER root
 
-		
+RUN \
+  apt-get update && \
+  apt-get install -y libncurses-dev
 
-		
+# Make ~/neuron directory to hold stuff.
+WORKDIR neuron
 
-RUN apt-get update; apt-get install -y automake libtool build-essential openmpi-bin libopenmpi-dev git vim  \
+# Fetch NEURON source files, extract them, delete .tar.gz file.
+RUN \
+  wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.4/nrn-7.4.tar.gz && \
+  tar -xzf nrn-7.4.tar.gz && \
+  rm nrn-7.4.tar.gz
 
-		
+# Fetch Interviews.
+# RUN \
+#  wget http://www.neuron.yale.edu/ftp/neuron/versions/v7.4/iv-19.tar.gz  && \  
+#  tar -xzf iv-19.tar.gz && \
+#  rm iv-19.tar.gz
 
-                       wget libncurses5-dev libreadline-dev libgsl0-dev cython3
+WORKDIR nrn-7.4
 
-		
+# Compile NEURON.
+RUN \
+  ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
+  make && \
+  make install
 
-		
+# Install python interface
+WORKDIR src/nrnpython
+RUN python setup.py install
 
-USER $NB_USER
+# Install PyNeuron-Toolbox
+WORKDIR $HOME
+RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
+WORKDIR PyNeuron-Toolbox
+RUN python setup.py install
 
-		
+# Install JSAnimation
+WORKDIR $HOME
+RUN git clone https://github.com/jakevdp/JSAnimation.git
+RUN python JSAnimation/setup.py install
 
-		
 
-RUN mkdir -p $VENV; \
+ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
 
-		
+RUN cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
 
-    cd $NRN; mkdir -p $VENV/bin; \
-
-		
-
-    $HOME/packages/$NRN/configure --with-paranrn --with-nrnpython=/usr/bin/python2 --disable-rx3d --without-iv --prefix=$VENV; \
-
-		
-
-    make; make install; \
-
-		
-
-    cd src/nrnpython; /usr/bin/python2 setup.py install; \
-
-		
-
-    cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
-
-		
-
-		
-
+# Switch back to non-root user privledges
+WORKDIR $HOME
 USER main
