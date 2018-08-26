@@ -37,24 +37,24 @@ RUN \
   make install
 
 # Install python interface
-WORKDIR src/nrnpython
-RUN python setup.py install
+#WORKDIR src/nrnpython
+#RUN python setup.py install
 
 # Install PyNeuron-Toolbox
-WORKDIR $HOME
-RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
-WORKDIR PyNeuron-Toolbox
-RUN python setup.py install
+#WORKDIR $HOME
+#RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
+#WORKDIR PyNeuron-Toolbox
+#RUN python setup.py install
 
 # Install JSAnimation
-WORKDIR $HOME
-RUN git clone https://github.com/jakevdp/JSAnimation.git
-RUN python JSAnimation/setup.py install
+#WORKDIR $HOME
+#RUN git clone https://github.com/jakevdp/JSAnimation.git
+#RUN python JSAnimation/setup.py install
 
 
-ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
+#ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
 
-RUN cd $VENV/bin; ln -s ../x86_64/bin/nrnivmodl
+cd $VENV/bin/sh; ln -s ../x86_64/bin/nrnivmodl
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
