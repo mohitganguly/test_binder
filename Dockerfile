@@ -34,7 +34,7 @@ WORKDIR nrn-7.4
 RUN \
   ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
   make && \
-  make install
+  make install \
   cd $VENV/bin/sh; ln -s ../x86_64/bin/nrnivmodl
 # Install python interface
 #WORKDIR src/nrnpython
