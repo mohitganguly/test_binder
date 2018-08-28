@@ -90,7 +90,7 @@ RUN apt-get update; apt-get install -y automake libtool build-essential openmpi-
 
 		
 
-USER $NB_USER
+#USER $NB_USER
 
 		
 
@@ -122,10 +122,10 @@ RUN mkdir -p $VENV; \
 
 		
 
-USER main
+#USER main
 
 
 
 # Switch back to non-root user privledges
-WORKDIR $HOME
+#WORKDIR $HOME
 USER main
