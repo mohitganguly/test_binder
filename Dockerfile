@@ -3,7 +3,7 @@
 #
 
 # Pull base image.
-FROM andrewosh/binder-base
+#FROM andrewosh/binder-base
 
 MAINTAINER Alex Williams <alex.h.willia@gmail.com>
 
