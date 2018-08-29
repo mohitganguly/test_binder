@@ -32,7 +32,7 @@ WORKDIR nrn-7.4
 
 # Compile NEURON.
 RUN \
-  ./configure --prefix=`pwd` --without-iv --with-nrnpython=$HOME/anaconda/bin/python && \
+  ./configure --prefix=`pwd` 
   make && \
   make install
 
