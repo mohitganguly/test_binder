@@ -41,7 +41,7 @@ WORKDIR src/nrnpython
 RUN python setup.py install
 
 
-ENV PYTHONPATH $PYTHONPATH
+ENV PATH $HOME/neuron/nrn-7.4/x86_64/bin:$PATH
 
 # Switch back to non-root user privledges
 WORKDIR $HOME
