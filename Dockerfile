@@ -40,7 +40,24 @@ RUN \
 WORKDIR src/nrnpython
 RUN python setup.py install
 
+# Install PyNeuron-Toolbox
+WORKDIR $HOME
+RUN git clone https://github.com/ahwillia/PyNeuron-Toolbox
+WORKDIR PyNeuron-Toolbox
+RUN python setup.py install
 
+# Install JSAnimation
+WORKDIR $HOME
+RUN git clone https://github.com/jakevdp/JSAnimation.git
+RUN python JSAnimation/setup.py install
+
+# Install other requirements
+RUN pip install palettable
+
+ENV PYTHONPATH $PYTHONPATH:$HOME/JSAnimation/:$HOME/PyNeuron-Toolbox/
+
+# Add NEURON to path
+# TODO: detect "x86_64" somehow?
 ENV PATH $HOME/neuron/nrn-7.4/x86_64/bin:$PATH
 
 # Switch back to non-root user privledges
