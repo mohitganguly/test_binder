@@ -1,0 +1,9 @@
+Temperature 	Maximum rate of rise (lower limit)	Maximum rate of 
+5	60	
+7.5	83	
+10	114	
+12.5	152	
+15	202	
+17.5	263	
+20	340	
+25	505	
